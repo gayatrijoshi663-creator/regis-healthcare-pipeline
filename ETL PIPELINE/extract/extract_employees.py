@@ -5,8 +5,8 @@ from pyspark.sql import SparkSession
 from config.config import RAW_PREFIX, BRONZE_PREFIX, RAW_FILES
 from config.codes import d_minus_data,reading_data,Generate_Batch_ID,partition_by_date,FinalLoad
 
-TABLE_NAME = "facilities"
-column_name = "facilitie_id"
+TABLE_NAME = "employees"
+column_name = "employee_id"
 
 raw_path= d_minus_data(RAW_PREFIX,TABLE_NAME)
 print(raw_path)
