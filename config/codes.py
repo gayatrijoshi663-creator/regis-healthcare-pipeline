@@ -1,7 +1,7 @@
 def d_minus_data(RAW_PREFIX,TABLE_NAME):
     from datetime import datetime, timedelta
     # Get yesterday's date
-    now = datetime.now() - timedelta(days=0) 
+    now = datetime.now() - timedelta(days=1) 
     # yr, mon, dt = now.year, now.month, now.day
     year = now.year
     month = now.month
@@ -70,7 +70,7 @@ class FinalLoad:
                 .option("header", "true")\
                 .mode("overwrite") \
                 .partitionBy("year","month","day") \
-                .save(f"{bronze_path}/{TABLE_NAME}")
+                .save(f"s3://{bronze_path}/{TABLE_NAME}")
              # .option("overwriteSchema", "true") \
             print("✅ Data successfully written to bronze layer.")
         
@@ -82,6 +82,12 @@ class FinalLoad:
             print("Unexpected error occurred while writing data:")
             print(str(e))
             traceback.print_exc()   # optional: prints full stack trace for debugging
+
+def reading_bronze(spark,raw_path):
+    df= spark.read.csv(raw_path,header=True,inferSchema=True)
+    return df
+
+    
 
 
 
